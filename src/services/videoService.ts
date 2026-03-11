@@ -67,6 +67,46 @@ export class VideoService {
         const data: any = await this.ffmpeg.readFile('output.mp4');
         return new Blob([data], { type: 'video/mp4' });
     }
+    async cut(videoFile: File, start: number, end: number): Promise<Blob> {
+        if (!this.ffmpeg) throw new Error('FFmpeg not loaded');
+
+        await this.ffmpeg.writeFile('input.mp4', await fetchFile(videoFile));
+
+        // duration = end - start
+        const duration = end - start;
+        await this.ffmpeg.exec([
+            '-ss', start.toString(),
+            '-i', 'input.mp4',
+            '-t', duration.toString(),
+            '-c', 'copy',
+            'output.mp4'
+        ]);
+
+        const data: any = await this.ffmpeg.readFile('output.mp4');
+        return new Blob([data], { type: 'video/mp4' });
+    }
+
+    async montage(files: File[]): Promise<Blob> {
+        if (!this.ffmpeg) throw new Error('FFmpeg not loaded');
+
+        const listContent = files.map((_, i) => `file 'input${i}.mp4'`).join('\n');
+        await this.ffmpeg.writeFile('list.txt', listContent);
+
+        for (let i = 0; i < files.length; i++) {
+            await this.ffmpeg.writeFile(`input${i}.mp4`, await fetchFile(files[i]));
+        }
+
+        await this.ffmpeg.exec([
+            '-f', 'concat',
+            '-safe', '0',
+            '-i', 'list.txt',
+            '-c', 'copy',
+            'output.mp4'
+        ]);
+
+        const data: any = await this.ffmpeg.readFile('output.mp4');
+        return new Blob([data], { type: 'video/mp4' });
+    }
 }
 
 export const videoService = new VideoService();
