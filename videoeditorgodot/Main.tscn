@@ -252,12 +252,96 @@ text = "Clear"
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="Gen" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="Margin" type="MarginContainer" parent="VBox/MainWorkspace/ToolsPanel/Gen"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel/Gen/Margin"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBox/MainWorkspace/ToolsPanel/Gen/Margin/VBox"]
+layout_mode = 2
+text = "Generation Options"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBox/MainWorkspace/ToolsPanel/Gen/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="ImageGenBtn" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Gen/Margin/VBox"]
+layout_mode = 2
+text = "Generate Image Model"
+
+[node name="VideoGenBtn" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Gen/Margin/VBox"]
+layout_mode = 2
+text = "Generate Video Model"
+
+[node name="Shop Garage" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 4
+
+[node name="Margin" type="MarginContainer" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage/Margin"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage/Margin/VBox"]
+layout_mode = 2
+text = "NFSU2 Performance Shop"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="GridContainer" type="GridContainer" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage/Margin/VBox"]
+layout_mode = 2
+columns = 2
+
+[node name="EngineBtn" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage/Margin/VBox/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Engine (CPU)"
+
+[node name="ECUBtn" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage/Margin/VBox/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ECU (Memory)"
+
+[node name="TransmissionBtn" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage/Margin/VBox/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Transmission (Disk)"
+
+[node name="TurboBtn" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage/Margin/VBox/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Turbo (GPU)"
+
 [node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a File"
 size = Vector2i(600, 400)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
+show_hidden_files = true
+use_native_dialog = true
 filters = PackedStringArray("*.ogv ; Ogg Video files")
 
 [node name="HTTP_Ollama" type="HTTPRequest" parent="."]

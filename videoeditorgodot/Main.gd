@@ -24,6 +24,8 @@ var is_dragging_slider: bool = false
 var has_loaded_video: bool = false
 
 func _ready():
+    _apply_afterglow_animations(self)
+    
     # Connect UI signals
     open_button.pressed.connect(_on_open_button_pressed)
     file_dialog.file_selected.connect(_on_file_selected)
@@ -56,6 +58,26 @@ func _ready():
     # HTTP signals
     http_ollama.request_completed.connect(_on_ollama_request_completed)
     http_agent.request_completed.connect(_on_agent_request_completed)
+
+func _apply_afterglow_animations(node: Node):
+    if node is Button:
+        # Create an afterglow effect using a CanvasItem modulate property
+        node.mouse_entered.connect(func():
+            var tween = create_tween()
+            tween.tween_property(node, "modulate", Color(1.5, 2.0, 1.5, 1.0), 0.1)
+        )
+        node.mouse_exited.connect(func():
+            var tween = create_tween()
+            tween.tween_property(node, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.5)
+        )
+        node.pressed.connect(func():
+            var tween = create_tween()
+            node.modulate = Color(2.0, 3.0, 2.0, 1.0)
+            tween.tween_property(node, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.8).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+        )
+        
+    for child in node.get_children():
+        _apply_afterglow_animations(child)
 
 func _process(_delta):
     if has_loaded_video and video_player.is_playing():

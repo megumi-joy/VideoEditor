@@ -55,12 +55,12 @@ shadow_color = Color(0.5, 1, 0.6, 1)
 shadow_size = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
-bg_color = Color(0, 0, 0, 1)
+bg_color = Color(0, 0, 0, 0.4)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.2, 0.6, 0.3, 1)
+border_color = Color(0.2, 0.6, 0.3, 0.6)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -71,28 +71,28 @@ content_margin_left = 20.0
 content_margin_top = 10.0
 content_margin_right = 20.0
 content_margin_bottom = 10.0
-bg_color = Color(0, 0, 0, 1)
+bg_color = Color(0, 0, 0, 0.6)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 0
-border_color = Color(0.2, 0.6, 0.3, 1)
+border_color = Color(0.2, 0.7, 0.4, 1)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
-shadow_color = Color(0.2, 0.6, 0.3, 0.4)
-shadow_size = 4
+shadow_color = Color(0.2, 0.6, 0.3, 0.5)
+shadow_size = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tab_bg"]
 content_margin_left = 20.0
 content_margin_top = 10.0
 content_margin_right = 20.0
 content_margin_bottom = 10.0
-bg_color = Color(0, 0, 0, 1)
+bg_color = Color(0, 0, 0, 0.3)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.1, 0.3, 0.15, 1)
+border_color = Color(0.1, 0.4, 0.2, 0.5)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 
