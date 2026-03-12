@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://df7j1k2m3n4o"]
+[gd_scene load_steps=2 format=3 uid="uid://dh4dt7rier026"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_a1b2c"]
 
@@ -120,17 +120,19 @@ text = "Cut Range"
 [node name="ToolsPanel" type="TabContainer" parent="VBox/MainWorkspace"]
 layout_mode = 2
 size_flags_horizontal = 3
+current_tab = 0
 
 [node name="Edit" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel"]
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="Margin" type="MarginContainer" parent="VBox/MainWorkspace/ToolsPanel/Edit"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
-size_flags_vertical = 3
 
 [node name="VBox" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel/Edit/Margin"]
 layout_mode = 2
@@ -192,14 +194,15 @@ text = "Generate"
 [node name="AI Analysis" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Margin" type="MarginContainer" parent="VBox/MainWorkspace/ToolsPanel/AI Analysis"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
-size_flags_vertical = 3
 
 [node name="VBox" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel/AI Analysis/Margin"]
 layout_mode = 2
@@ -220,14 +223,15 @@ text = "Generate Tactical Insight"
 [node name="History" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 2
 
 [node name="Margin" type="MarginContainer" parent="VBox/MainWorkspace/ToolsPanel/History"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
-size_flags_vertical = 3
 
 [node name="VBox" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel/History/Margin"]
 layout_mode = 2
