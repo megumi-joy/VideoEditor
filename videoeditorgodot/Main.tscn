@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://dh4dt7rier026"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_a1b2c"]
+[ext_resource type="Texture2D" uid="uid://logo" path="res://logo.png" id="2_logo"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -20,6 +21,24 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.121569, 0.121569, 0.141176, 1)
 
+[node name="LogoBackground" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.0392157)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_logo")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -27,42 +46,96 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 0
 
 [node name="TopBar" type="PanelContainer" parent="VBox"]
 layout_mode = 2
 
 [node name="Margin" type="MarginContainer" parent="VBox/TopBar"]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 4
 
 [node name="HBox" type="HBoxContainer" parent="VBox/TopBar/Margin"]
 layout_mode = 2
+theme_override_constants/separation = 20
 
-[node name="Title" type="Label" parent="VBox/TopBar/Margin/HBox"]
+[node name="LogoSmall" type="TextureRect" parent="VBox/TopBar/Margin/HBox"]
+custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
-text = "MagicEditor Godot"
-vertical_alignment = 1
+texture = ExtResource("2_logo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MenuButtons" type="HBoxContainer" parent="VBox/TopBar/Margin/HBox"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="FileMenu" type="Button" parent="VBox/TopBar/Margin/HBox/MenuButtons"]
+layout_mode = 2
+text = "File"
+flat = true
+
+[node name="EditMenu" type="Button" parent="VBox/TopBar/Margin/HBox/MenuButtons"]
+layout_mode = 2
+text = "Edit"
+flat = true
+
+[node name="SelectionMenu" type="Button" parent="VBox/TopBar/Margin/HBox/MenuButtons"]
+layout_mode = 2
+text = "Selection"
+flat = true
+
+[node name="ViewMenu" type="Button" parent="VBox/TopBar/Margin/HBox/MenuButtons"]
+layout_mode = 2
+text = "View"
+flat = true
 
 [node name="Spacer" type="Control" parent="VBox/TopBar/Margin/HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="OpenButton" type="Button" parent="VBox/TopBar/Margin/HBox"]
+[node name="EllipsisButton" type="Button" parent="VBox/TopBar/Margin/HBox"]
 layout_mode = 2
-text = "Open Folder (.ogv only)"
-
-[node name="SaveButton" type="Button" parent="VBox/TopBar/Margin/HBox"]
-layout_mode = 2
-text = "Save As"
+text = "..."
+flat = true
 
 [node name="MainWorkspace" type="HBoxContainer" parent="VBox"]
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="CentralMenu" type="CenterContainer" parent="VBox/MainWorkspace"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBox" type="VBoxContainer" parent="VBox/MainWorkspace/CentralMenu"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="LogoLarge" type="TextureRect" parent="VBox/MainWorkspace/CentralMenu/VBox"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("2_logo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="VBox/MainWorkspace/CentralMenu/VBox"]
+layout_mode = 2
+text = "Welcome to MagicEditor"
+horizontal_alignment = 1
+
+[node name="HBox" type="HBoxContainer" parent="VBox/MainWorkspace/CentralMenu/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="CenterOpenButton" type="Button" parent="VBox/MainWorkspace/CentralMenu/VBox/HBox"]
+layout_mode = 2
+text = "Open Video Folder"
+
 [node name="VideoArea" type="VBoxContainer" parent="VBox/MainWorkspace"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0

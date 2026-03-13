@@ -1,12 +1,16 @@
 extends Control
 
+@onready var video_area = $VBox/MainWorkspace/VideoArea
+@onready var central_menu = $VBox/MainWorkspace/CentralMenu
+@onready var center_open_button = $VBox/MainWorkspace/CentralMenu/VBox/HBox/CenterOpenButton
+@onready var logo_background = $LogoBackground
+
 @onready var video_player = $VBox/MainWorkspace/VideoArea/VideoContainer/VideoStreamPlayer
 @onready var time_slider = $VBox/MainWorkspace/VideoArea/ControlsArea/Timeline/TimeSlider
 @onready var time_label = $VBox/MainWorkspace/VideoArea/ControlsArea/Timeline/TimeLabel
 @onready var start_label = $VBox/MainWorkspace/VideoArea/ControlsArea/RangeControls/StartLabel
 @onready var end_label = $VBox/MainWorkspace/VideoArea/ControlsArea/RangeControls/EndLabel
 @onready var play_pause_button = $VBox/MainWorkspace/VideoArea/ControlsArea/Timeline/PlayPauseButton
-@onready var open_button = $VBox/TopBar/Margin/HBox/OpenButton
 @onready var file_dialog = $FileDialog
 
 @onready var history_list = $VBox/MainWorkspace/ToolsPanel/History/Margin/VBox/HistoryList
@@ -27,7 +31,9 @@ func _ready():
     _apply_afterglow_animations(self)
     
     # Connect UI signals
-    open_button.pressed.connect(_on_open_button_pressed)
+    center_open_button.pressed.connect(_on_open_button_pressed)
+    $VBox/TopBar/Margin/HBox/MenuButtons/FileMenu.pressed.connect(_on_open_button_pressed)
+    
     file_dialog.file_selected.connect(_on_file_selected)
     play_pause_button.pressed.connect(_on_play_pause_pressed)
     
@@ -102,6 +108,14 @@ func _on_file_selected(path: String):
     
     has_loaded_video = true
     play_pause_button.text = "Pause"
+    
+    # Switch UI state
+    central_menu.visible = false
+    video_area.visible = true
+    
+    # Fade out background logo slightly more when video is active
+    var tween = create_tween()
+    tween.tween_property(logo_background, "modulate:a", 0.02, 1.0)
     
     # Using 30s as a mock duration for the scrubber, as stream duration might not parse
     duration = 30.0 
