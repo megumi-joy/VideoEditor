@@ -1,7 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dh4dt7rier026"]
+[gd_scene load_steps=7 format=3 uid="uid://dh4dt7rier026"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_a1b2c"]
 [ext_resource type="Texture2D" uid="uid://logo" path="res://logo.png" id="2_logo"]
+[ext_resource type="PackedScene" uid="uid://topbar" path="res://TopBar.tscn" id="3_topbar"]
+[ext_resource type="PackedScene" uid="uid://centralmenu" path="res://CentralMenu.tscn" id="4_centralmenu"]
+[ext_resource type="PackedScene" uid="uid://videoarea" path="res://VideoArea.tscn" id="5_videoarea"]
+[ext_resource type="PackedScene" uid="uid://toolspanel" path="res://ToolsPanel.tscn" id="6_toolspanel"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -22,6 +26,7 @@ grow_vertical = 2
 color = Color(0.121569, 0.121569, 0.141176, 1)
 
 [node name="LogoBackground" type="TextureRect" parent="."]
+unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.0392157)
 layout_mode = 1
 anchors_preset = 8
@@ -48,366 +53,30 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="TopBar" type="PanelContainer" parent="VBox"]
+[node name="TopBar" parent="VBox" instance=ExtResource("3_topbar")]
+unique_name_in_owner = true
 layout_mode = 2
-
-[node name="Margin" type="MarginContainer" parent="VBox/TopBar"]
-layout_mode = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 4
-
-[node name="HBox" type="HBoxContainer" parent="VBox/TopBar/Margin"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="LogoSmall" type="TextureRect" parent="VBox/TopBar/Margin/HBox"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-texture = ExtResource("2_logo")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="MenuButtons" type="HBoxContainer" parent="VBox/TopBar/Margin/HBox"]
-layout_mode = 2
-theme_override_constants/separation = 15
-
-[node name="FileMenu" type="Button" parent="VBox/TopBar/Margin/HBox/MenuButtons"]
-layout_mode = 2
-text = "File"
-flat = true
-
-[node name="EditMenu" type="Button" parent="VBox/TopBar/Margin/HBox/MenuButtons"]
-layout_mode = 2
-text = "Edit"
-flat = true
-
-[node name="SelectionMenu" type="Button" parent="VBox/TopBar/Margin/HBox/MenuButtons"]
-layout_mode = 2
-text = "Selection"
-flat = true
-
-[node name="ViewMenu" type="Button" parent="VBox/TopBar/Margin/HBox/MenuButtons"]
-layout_mode = 2
-text = "View"
-flat = true
-
-[node name="Spacer" type="Control" parent="VBox/TopBar/Margin/HBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="EllipsisButton" type="Button" parent="VBox/TopBar/Margin/HBox"]
-layout_mode = 2
-text = "..."
-flat = true
 
 [node name="MainWorkspace" type="HBoxContainer" parent="VBox"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CentralMenu" type="CenterContainer" parent="VBox/MainWorkspace"]
+[node name="CentralMenu" parent="VBox/MainWorkspace" instance=ExtResource("4_centralmenu")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBox" type="VBoxContainer" parent="VBox/MainWorkspace/CentralMenu"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="LogoLarge" type="TextureRect" parent="VBox/MainWorkspace/CentralMenu/VBox"]
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-texture = ExtResource("2_logo")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="VBox/MainWorkspace/CentralMenu/VBox"]
-layout_mode = 2
-text = "Welcome to MagicEditor"
-horizontal_alignment = 1
-
-[node name="HBox" type="HBoxContainer" parent="VBox/MainWorkspace/CentralMenu/VBox"]
-layout_mode = 2
-alignment = 1
-
-[node name="CenterOpenButton" type="Button" parent="VBox/MainWorkspace/CentralMenu/VBox/HBox"]
-layout_mode = 2
-text = "Open Video Folder"
-
-[node name="VideoArea" type="VBoxContainer" parent="VBox/MainWorkspace"]
+[node name="VideoArea" parent="VBox/MainWorkspace" instance=ExtResource("5_videoarea")]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
 
-[node name="VideoContainer" type="PanelContainer" parent="VBox/MainWorkspace/VideoArea"]
+[node name="ToolsPanel" parent="VBox/MainWorkspace" instance=ExtResource("6_toolspanel")]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="VBox/MainWorkspace/VideoArea/VideoContainer"]
-layout_mode = 2
-expand = true
-
-[node name="ControlsArea" type="VBoxContainer" parent="VBox/MainWorkspace/VideoArea"]
-layout_mode = 2
-
-[node name="Timeline" type="HBoxContainer" parent="VBox/MainWorkspace/VideoArea/ControlsArea"]
-layout_mode = 2
-
-[node name="PlayPauseButton" type="Button" parent="VBox/MainWorkspace/VideoArea/ControlsArea/Timeline"]
-layout_mode = 2
-text = "Play"
-
-[node name="TimeSlider" type="HSlider" parent="VBox/MainWorkspace/VideoArea/ControlsArea/Timeline"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="TimeLabel" type="Label" parent="VBox/MainWorkspace/VideoArea/ControlsArea/Timeline"]
-layout_mode = 2
-text = "0.0s / 0.0s"
-
-[node name="RangeControls" type="HBoxContainer" parent="VBox/MainWorkspace/VideoArea/ControlsArea"]
-layout_mode = 2
-alignment = 1
-
-[node name="StartLabel" type="Label" parent="VBox/MainWorkspace/VideoArea/ControlsArea/RangeControls"]
-layout_mode = 2
-text = "Start: 0.0s"
-
-[node name="SetStartButton" type="Button" parent="VBox/MainWorkspace/VideoArea/ControlsArea/RangeControls"]
-layout_mode = 2
-text = "Set Start"
-
-[node name="EndLabel" type="Label" parent="VBox/MainWorkspace/VideoArea/ControlsArea/RangeControls"]
-layout_mode = 2
-text = "End: 0.0s"
-
-[node name="SetEndButton" type="Button" parent="VBox/MainWorkspace/VideoArea/ControlsArea/RangeControls"]
-layout_mode = 2
-text = "Set End"
-
-[node name="CutButton" type="Button" parent="VBox/MainWorkspace/VideoArea/ControlsArea/RangeControls"]
-layout_mode = 2
-text = "Cut Range"
-
-[node name="ToolsPanel" type="TabContainer" parent="VBox/MainWorkspace"]
-layout_mode = 2
-size_flags_horizontal = 3
-current_tab = 0
-
-[node name="Edit" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel"]
-layout_mode = 2
-metadata/_tab_index = 0
-
-[node name="Margin" type="MarginContainer" parent="VBox/MainWorkspace/ToolsPanel/Edit"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBox" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel/Edit/Margin"]
-layout_mode = 2
-
-[node name="EffectsLabel" type="Label" parent="VBox/MainWorkspace/ToolsPanel/Edit/Margin/VBox"]
-layout_mode = 2
-text = "Effects"
-
-[node name="EffectsGrid" type="GridContainer" parent="VBox/MainWorkspace/ToolsPanel/Edit/Margin/VBox"]
-layout_mode = 2
-columns = 2
-
-[node name="EffectVintage" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Edit/Margin/VBox/EffectsGrid"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Vintage"
-
-[node name="EffectNoir" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Edit/Margin/VBox/EffectsGrid"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Noir"
-
-[node name="EffectGlow" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Edit/Margin/VBox/EffectsGrid"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Glow"
-
-[node name="EffectIdentity" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Edit/Margin/VBox/EffectsGrid"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Identity"
-
-[node name="HSeparator" type="HSeparator" parent="VBox/MainWorkspace/ToolsPanel/Edit/Margin/VBox"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="MagicLabel" type="Label" parent="VBox/MainWorkspace/ToolsPanel/Edit/Margin/VBox"]
-layout_mode = 2
-text = "Magic Asset Generation"
-
-[node name="MagicPrompt" type="TextEdit" parent="VBox/MainWorkspace/ToolsPanel/Edit/Margin/VBox"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-placeholder_text = "Describe an image to generate..."
-
-[node name="HBox" type="HBoxContainer" parent="VBox/MainWorkspace/ToolsPanel/Edit/Margin/VBox"]
-layout_mode = 2
-
-[node name="MagicPromptButton" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Edit/Margin/VBox/HBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Magic Prompt"
-
-[node name="GenerateButton" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Edit/Margin/VBox/HBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Generate"
-
-[node name="AI Analysis" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel"]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 1
-
-[node name="Margin" type="MarginContainer" parent="VBox/MainWorkspace/ToolsPanel/AI Analysis"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBox" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel/AI Analysis/Margin"]
-layout_mode = 2
-
-[node name="RangeInfo" type="Label" parent="VBox/MainWorkspace/ToolsPanel/AI Analysis/Margin/VBox"]
-layout_mode = 2
-text = "Analyzing sequence: 0.0s - 0.0s"
-
-[node name="AnalysisResult" type="RichTextLabel" parent="VBox/MainWorkspace/ToolsPanel/AI Analysis/Margin/VBox"]
-layout_mode = 2
-size_flags_vertical = 3
-text = "Select a range in the Edit tab and click analyze"
-
-[node name="AnalyzeButton" type="Button" parent="VBox/MainWorkspace/ToolsPanel/AI Analysis/Margin/VBox"]
-layout_mode = 2
-text = "Generate Tactical Insight"
-
-[node name="History" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel"]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 2
-
-[node name="Margin" type="MarginContainer" parent="VBox/MainWorkspace/ToolsPanel/History"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBox" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel/History/Margin"]
-layout_mode = 2
-
-[node name="HBox" type="HBoxContainer" parent="VBox/MainWorkspace/ToolsPanel/History/Margin/VBox"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBox/MainWorkspace/ToolsPanel/History/Margin/VBox/HBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Recent Edits"
-
-[node name="ClearHistoryButton" type="Button" parent="VBox/MainWorkspace/ToolsPanel/History/Margin/VBox/HBox"]
-layout_mode = 2
-text = "Clear"
-
-[node name="HistoryList" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel/History/Margin/VBox"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Gen" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel"]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 3
-
-[node name="Margin" type="MarginContainer" parent="VBox/MainWorkspace/ToolsPanel/Gen"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBox" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel/Gen/Margin"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBox/MainWorkspace/ToolsPanel/Gen/Margin/VBox"]
-layout_mode = 2
-text = "Generation Options"
-horizontal_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="VBox/MainWorkspace/ToolsPanel/Gen/Margin/VBox"]
-layout_mode = 2
-theme_override_constants/separation = 15
-
-[node name="ImageGenBtn" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Gen/Margin/VBox"]
-layout_mode = 2
-text = "Generate Image Model"
-
-[node name="VideoGenBtn" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Gen/Margin/VBox"]
-layout_mode = 2
-text = "Generate Video Model"
-
-[node name="Shop Garage" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel"]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 4
-
-[node name="Margin" type="MarginContainer" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBox" type="VBoxContainer" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage/Margin"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage/Margin/VBox"]
-layout_mode = 2
-text = "NFSU2 Performance Shop"
-horizontal_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage/Margin/VBox"]
-layout_mode = 2
-theme_override_constants/separation = 15
-
-[node name="GridContainer" type="GridContainer" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage/Margin/VBox"]
-layout_mode = 2
-columns = 2
-
-[node name="EngineBtn" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage/Margin/VBox/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Engine (CPU)"
-
-[node name="ECUBtn" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage/Margin/VBox/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "ECU (Memory)"
-
-[node name="TransmissionBtn" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage/Margin/VBox/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Transmission (Disk)"
-
-[node name="TurboBtn" type="Button" parent="VBox/MainWorkspace/ToolsPanel/Shop Garage/Margin/VBox/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Turbo (GPU)"
 
 [node name="FileDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
 title = "Open a File"
 size = Vector2i(600, 400)
 ok_button_text = "Open"
@@ -418,5 +87,7 @@ use_native_dialog = true
 filters = PackedStringArray("*.ogv ; Ogg Video files")
 
 [node name="HTTP_Ollama" type="HTTPRequest" parent="."]
+unique_name_in_owner = true
 
 [node name="HTTP_Agent" type="HTTPRequest" parent="."]
+unique_name_in_owner = true

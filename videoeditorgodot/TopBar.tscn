@@ -1,0 +1,65 @@
+[gd_scene load_steps=2 format=3 uid="uid://topbar"]
+
+[ext_resource type="Texture2D" uid="uid://logo" path="res://logo.png" id="1_logo"]
+
+[node name="TopBar" type="PanelContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 4
+
+[node name="HBox" type="HBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="LogoSmall" type="TextureRect" parent="Margin/HBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = ExtResource("1_logo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MenuButtons" type="HBoxContainer" parent="Margin/HBox"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="FileMenu" type="Button" parent="Margin/HBox/MenuButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "File"
+flat = true
+
+[node name="EditMenu" type="Button" parent="Margin/HBox/MenuButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Edit"
+flat = true
+
+[node name="SelectionMenu" type="Button" parent="Margin/HBox/MenuButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Selection"
+flat = true
+
+[node name="ViewMenu" type="Button" parent="Margin/HBox/MenuButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "View"
+flat = true
+
+[node name="Spacer" type="Control" parent="Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EllipsisButton" type="Button" parent="Margin/HBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "..."
+flat = true
