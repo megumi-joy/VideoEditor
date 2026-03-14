@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dh4dt7rier026"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_a1b2c"]
-[ext_resource type="Texture2D" uid="uid://logo" path="res://logo.png" id="2_logo"]
+[ext_resource type="Texture2D" uid="uid://ct8kbaao4xyo6" path="res://logo.png" id="2_logo"]
 [ext_resource type="PackedScene" uid="uid://topbar" path="res://TopBar.tscn" id="3_topbar"]
 [ext_resource type="PackedScene" uid="uid://centralmenu" path="res://CentralMenu.tscn" id="4_centralmenu"]
 [ext_resource type="PackedScene" uid="uid://videoarea" path="res://VideoArea.tscn" id="5_videoarea"]
@@ -82,9 +82,9 @@ size = Vector2i(600, 400)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
+filters = PackedStringArray("*.ogv ; Ogg Video files", "*.mp4 ; MP4 Video files", "*.webm ; WebM Video files", "*.mkv ; Matroska Video files", "*.avi ; AVI Video files")
 show_hidden_files = true
 use_native_dialog = true
-filters = PackedStringArray("*.ogv ; Ogg Video files")
 
 [node name="HTTP_Ollama" type="HTTPRequest" parent="."]
 unique_name_in_owner = true

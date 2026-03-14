@@ -1,25 +1,32 @@
 extends Control
 
-@onready var video_area = $VBox/MainWorkspace/VideoArea
-@onready var central_menu = $VBox/MainWorkspace/CentralMenu
-@onready var center_open_button = $VBox/MainWorkspace/CentralMenu/VBox/HBox/CenterOpenButton
-@onready var logo_background = $LogoBackground
+# Modular References
+@onready var top_bar = %TopBar
+@onready var central_menu = %CentralMenu
+@onready var video_area = %VideoArea
+@onready var tools_panel = %ToolsPanel
+@onready var file_dialog = %FileDialog
+@onready var http_ollama = %HTTP_Ollama
+@onready var http_agent = %HTTP_Agent
+@onready var logo_background = %LogoBackground
 
-@onready var video_player = $VBox/MainWorkspace/VideoArea/VideoContainer/VideoStreamPlayer
-@onready var time_slider = $VBox/MainWorkspace/VideoArea/ControlsArea/Timeline/TimeSlider
-@onready var time_label = $VBox/MainWorkspace/VideoArea/ControlsArea/Timeline/TimeLabel
-@onready var start_label = $VBox/MainWorkspace/VideoArea/ControlsArea/RangeControls/StartLabel
-@onready var end_label = $VBox/MainWorkspace/VideoArea/ControlsArea/RangeControls/EndLabel
-@onready var play_pause_button = $VBox/MainWorkspace/VideoArea/ControlsArea/Timeline/PlayPauseButton
-@onready var file_dialog = $FileDialog
+# Video Area Nodes (Nested)
+@onready var video_player = %VideoArea.get_node("%VideoStreamPlayer")
+@onready var time_slider = %VideoArea.get_node("%TimeSlider")
+@onready var time_label = %VideoArea.get_node("%TimeLabel")
+@onready var play_pause_button = %VideoArea.get_node("%PlayPauseButton")
+@onready var start_label = %VideoArea.get_node("%StartLabel")
+@onready var end_label = %VideoArea.get_node("%EndLabel")
 
-@onready var history_list = $VBox/MainWorkspace/ToolsPanel/History/Margin/VBox/HistoryList
-@onready var range_info_label = $"VBox/MainWorkspace/ToolsPanel/AI Analysis/Margin/VBox/RangeInfo"
-@onready var analysis_result = $"VBox/MainWorkspace/ToolsPanel/AI Analysis/Margin/VBox/AnalysisResult"
-@onready var magic_prompt = $VBox/MainWorkspace/ToolsPanel/Edit/Margin/VBox/MagicPrompt
+# Tools Panel Nodes (Nested)
+@onready var history_list = %ToolsPanel.get_node("%HistoryList")
+@onready var range_info_label = %ToolsPanel.get_node("%RangeInfo")
+@onready var analysis_result = %ToolsPanel.get_node("%AnalysisResult")
+@onready var magic_prompt = %ToolsPanel.get_node("%MagicPrompt")
+@onready var effects_grid = %ToolsPanel.get_node("%EffectsGrid")
 
-@onready var http_ollama = $HTTP_Ollama
-@onready var http_agent = $HTTP_Agent
+# Central Menu Nodes (Nested)
+@onready var center_open_button = %CentralMenu.get_node("%CenterOpenButton")
 
 var start_time: float = 0.0
 var end_time: float = 1.0
@@ -32,7 +39,7 @@ func _ready():
     
     # Connect UI signals
     center_open_button.pressed.connect(_on_open_button_pressed)
-    $VBox/TopBar/Margin/HBox/MenuButtons/FileMenu.pressed.connect(_on_open_button_pressed)
+    top_bar.get_node("%FileMenu").pressed.connect(_on_open_button_pressed)
     
     file_dialog.file_selected.connect(_on_file_selected)
     play_pause_button.pressed.connect(_on_play_pause_pressed)
@@ -45,18 +52,17 @@ func _ready():
             video_player.stream_position = time_slider.value
     )
     
-    $VBox/MainWorkspace/VideoArea/ControlsArea/RangeControls/SetStartButton.pressed.connect(_on_set_start_pressed)
-    $VBox/MainWorkspace/VideoArea/ControlsArea/RangeControls/SetEndButton.pressed.connect(_on_set_end_pressed)
-    $VBox/MainWorkspace/VideoArea/ControlsArea/RangeControls/CutButton.pressed.connect(_on_cut_pressed)
+    var range_controls = video_area.get_node("ControlsArea/RangeControls")
+    range_controls.get_node("%SetStartButton").pressed.connect(_on_set_start_pressed)
+    range_controls.get_node("%SetEndButton").pressed.connect(_on_set_end_pressed)
+    range_controls.get_node("%CutButton").pressed.connect(_on_cut_pressed)
     
-    $"VBox/MainWorkspace/ToolsPanel/History/Margin/VBox/HBox/ClearHistoryButton".pressed.connect(_on_clear_history)
-    $"VBox/MainWorkspace/ToolsPanel/AI Analysis/Margin/VBox/AnalyzeButton".pressed.connect(_on_analyze_pressed)
+    tools_panel.get_node("%ClearHistoryButton").pressed.connect(_on_clear_history)
+    tools_panel.get_node("%AnalyzeButton").pressed.connect(_on_analyze_pressed)
     
-    var edit_margin = $VBox/MainWorkspace/ToolsPanel/Edit/Margin/VBox
-    edit_margin.get_node("HBox/MagicPromptButton").pressed.connect(_on_magic_prompt_pressed)
-    edit_margin.get_node("HBox/GenerateButton").pressed.connect(_on_generate_image_pressed)
+    tools_panel.get_node("%MagicPromptButton").pressed.connect(_on_magic_prompt_pressed)
+    tools_panel.get_node("%GenerateButton").pressed.connect(_on_generate_image_pressed)
 
-    var effects_grid = edit_margin.get_node("EffectsGrid")
     for child in effects_grid.get_children():
         if child is Button:
             child.pressed.connect(_on_effect_applied.bind(child.text))
@@ -67,7 +73,6 @@ func _ready():
 
 func _apply_afterglow_animations(node: Node):
     if node is Button:
-        # Create an afterglow effect using a CanvasItem modulate property
         node.mouse_entered.connect(func():
             var tween = create_tween()
             tween.tween_property(node, "modulate", Color(1.5, 2.0, 1.5, 1.0), 0.1)
@@ -92,7 +97,6 @@ func _process(_delta):
             time_slider.value = pos
         time_label.text = "%.1fs / %.1fs" % [pos, duration]
         
-        # Loop playback within the selected range logically
         if pos >= end_time:
             video_player.stream_position = start_time
 
@@ -100,7 +104,6 @@ func _on_open_button_pressed():
     file_dialog.popup_centered()
 
 func _on_file_selected(path: String):
-    # Depending on Godot 4 build format could vary, VideoStreamTheora handles .ogv
     var stream = VideoStreamTheora.new()
     stream.file = path
     video_player.stream = stream
@@ -109,15 +112,12 @@ func _on_file_selected(path: String):
     has_loaded_video = true
     play_pause_button.text = "Pause"
     
-    # Switch UI state
     central_menu.visible = false
     video_area.visible = true
     
-    # Fade out background logo slightly more when video is active
     var tween = create_tween()
     tween.tween_property(logo_background, "modulate:a", 0.02, 1.0)
     
-    # Using 30s as a mock duration for the scrubber, as stream duration might not parse
     duration = 30.0 
     time_slider.max_value = duration
     start_time = 0.0
@@ -133,7 +133,6 @@ func _on_play_pause_pressed():
     play_pause_button.text = "Play" if video_player.paused else "Pause"
 
 func _on_time_slider_value_changed(value: float):
-    # Only update text if paused or dragging
     if not video_player.is_playing() or is_dragging_slider:
         time_label.text = "%.1fs / %.1fs" % [value, duration]
         if not is_dragging_slider and has_loaded_video:
@@ -172,7 +171,7 @@ func add_history(type: String, msg: String):
     var label = Label.new()
     label.text = "[%s] %s" % [type, msg]
     history_list.add_child(label)
-    history_list.move_child(label, 0) # insert at top
+    history_list.move_child(label, 0)
 
 func _on_clear_history():
     for child in history_list.get_children():
@@ -188,7 +187,6 @@ func _on_analyze_pressed():
         return
         
     analysis_result.text = "Requesting analysis..."
-    
     var prompt = "Watch the video sequence from %.1fs to %.1fs. Identify key combat events." % [start_time, end_time]
     var payload = {
         "model": "llama3",

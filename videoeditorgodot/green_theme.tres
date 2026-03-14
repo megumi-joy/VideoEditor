@@ -1,4 +1,17 @@
-[gd_resource type="Theme" load_steps=7 format=3 uid="uid://c83j1q9v7m2k"]
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://c83j1rav7m2k"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_hover"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(0.1, 0.15, 0.2, 0.4)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0.2, 0.8, 1, 0.2)
+shadow_size = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_normal"]
 content_margin_left = 16.0
@@ -18,33 +31,12 @@ corner_radius_bottom_left = 6
 shadow_color = Color(0.2, 0.6, 0.3, 0.4)
 shadow_size = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_hover"]
-content_margin_left = 12.0
-content_margin_top = 6.0
-content_margin_right = 12.0
-content_margin_bottom = 6.0
-bg_color = Color(0.1, 0.15, 0.2, 0.4)
-border_width_left = 0
-border_width_top = 0
-border_width_right = 0
-border_width_bottom = 0
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-shadow_color = Color(0.2, 0.8, 1, 0.2)
-shadow_size = 4
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_pressed"]
 content_margin_left = 12.0
 content_margin_top = 6.0
 content_margin_right = 12.0
 content_margin_bottom = 6.0
 bg_color = Color(0.15, 0.25, 0.35, 0.6)
-border_width_left = 0
-border_width_top = 0
-border_width_right = 0
-border_width_bottom = 0
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -54,9 +46,6 @@ shadow_size = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.05, 0.05, 0.06, 1)
-border_width_left = 0
-border_width_top = 0
-border_width_right = 0
 border_width_bottom = 1
 border_color = Color(0.15, 0.15, 0.18, 1)
 
@@ -77,7 +66,6 @@ content_margin_top = 10.0
 content_margin_right = 20.0
 content_margin_bottom = 10.0
 bg_color = Color(0.05, 0.05, 0.06, 1)
-border_width_top = 0
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 

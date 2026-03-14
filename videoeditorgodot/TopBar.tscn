@@ -54,6 +54,30 @@ layout_mode = 2
 text = "View"
 flat = true
 
+[node name="GoMenu" type="Button" parent="Margin/HBox/MenuButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Go"
+flat = true
+
+[node name="RunMenu" type="Button" parent="Margin/HBox/MenuButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Run"
+flat = true
+
+[node name="TerminalMenu" type="Button" parent="Margin/HBox/MenuButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Terminal"
+flat = true
+
+[node name="HelpMenu" type="Button" parent="Margin/HBox/MenuButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Help"
+flat = true
+
 [node name="Spacer" type="Control" parent="Margin/HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
