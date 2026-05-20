@@ -48,6 +48,8 @@ const EditorLayout: React.FC = () => {
     const [selectedModel, setSelectedModel] = useState<string>('llava');
     
     const [isAiLoading, setIsAiLoading] = useState(false);
+    const [modelToPull, setModelToPull] = useState<string>('llava');
+    const [isPulling, setIsPulling] = useState(false);
     const [magicPrompt, setMagicPrompt] = useState("");
     const [isGeneratingImage, setIsGeneratingImage] = useState(false);
     const [generatedImages, setGeneratedImages] = useState<{ id: string, url: string }[]>([]);
@@ -204,6 +206,24 @@ const EditorLayout: React.FC = () => {
             setSelectedModel(models[0]);
         } else {
             alert("No models found or Ollama is unreachable.");
+        }
+    };
+
+    const handlePullOllama = async () => {
+        if (!modelToPull) return;
+        setIsPulling(true);
+        try {
+            const success = await aiProviderService.pullOllamaModel(ollamaEndpoint, modelToPull);
+            if (success) {
+                alert(`Successfully pulled ${modelToPull}!`);
+                handleScanOllama(); // refresh list
+            } else {
+                alert(`Failed to pull ${modelToPull}. Check connection or model name.`);
+            }
+        } catch (err) {
+            alert(`Error pulling model.`);
+        } finally {
+            setIsPulling(false);
         }
     };
 
@@ -586,16 +606,35 @@ const EditorLayout: React.FC = () => {
                                                 <div>
                                                     <h4 className="text-sm font-semibold mb-1">Model</h4>
                                                     {aiProvider === 'ollama' ? (
-                                                        <div className="flex gap-2">
-                                                            <select 
-                                                                value={selectedModel} 
-                                                                onChange={(e) => setSelectedModel(e.target.value)}
-                                                                className="flex-1 text-xs p-2 rounded border bg-background text-primary outline-none"
-                                                            >
-                                                                {ollamaModels.map(m => <option key={m} value={m}>{m}</option>)}
-                                                            </select>
-                                                            <Button variant="outline" size="sm" onClick={handleScanOllama}>Scan</Button>
-                                                        </div>
+                                                        <>
+                                                            <div className="flex gap-2 mb-2">
+                                                                <select 
+                                                                    value={selectedModel} 
+                                                                    onChange={(e) => setSelectedModel(e.target.value)}
+                                                                    className="flex-1 text-xs p-2 rounded border bg-background text-primary outline-none"
+                                                                >
+                                                                    {ollamaModels.map(m => <option key={m} value={m}>{m}</option>)}
+                                                                </select>
+                                                                <Button variant="outline" size="sm" onClick={handleScanOllama}>Scan</Button>
+                                                            </div>
+                                                            <div className="flex gap-2 items-center border-t border-white/10 pt-2 mt-2">
+                                                                <input 
+                                                                    type="text" 
+                                                                    value={modelToPull}
+                                                                    onChange={(e) => setModelToPull(e.target.value)}
+                                                                    className="flex-1 text-xs p-2 rounded border bg-background text-primary outline-none"
+                                                                    placeholder="e.g. llava"
+                                                                />
+                                                                <Button 
+                                                                    variant="secondary" 
+                                                                    size="sm" 
+                                                                    onClick={handlePullOllama}
+                                                                    disabled={isPulling}
+                                                                >
+                                                                    {isPulling ? "Pulling..." : "Download Model"}
+                                                                </Button>
+                                                            </div>
+                                                        </>
                                                     ) : (
                                                         <input 
                                                             type="text" 

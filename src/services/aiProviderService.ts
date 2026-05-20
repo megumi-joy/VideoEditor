@@ -74,6 +74,23 @@ export class AIProviderService {
             return [];
         }
     }
+
+    async pullOllamaModel(endpoint: string, modelName: string): Promise<boolean> {
+        try {
+            const response = await fetch(`${endpoint}/pull`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: modelName })
+            });
+            // Note: Ollama pull endpoint streams the status. 
+            // For a simple implementation, we just wait for the request to complete.
+            // In a real app, we'd handle the stream to show progress.
+            return response.ok;
+        } catch (e) {
+            console.error('Pull failed:', e);
+            return false;
+        }
+    }
 }
 
 export const aiProviderService = new AIProviderService();
