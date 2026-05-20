@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "pull-vision": "ollama pull llava"
   },
   "dependencies": {
     "@ffmpeg/ffmpeg": "^0.12.15",

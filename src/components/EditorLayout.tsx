@@ -166,7 +166,13 @@ const EditorLayout: React.FC = () => {
     const runAiAnalysis = async () => {
         setIsAiLoading(true);
         try {
-            const result = await ollamaService.analyzeTimeframe(`Analyze the sequence from ${startTime}s to ${endTime}s.`);
+            // Strip the data URL prefix to get raw base64 strings
+            const base64Frames = frames.map(f => f.replace(/^data:image\/[a-z]+;base64,/, ''));
+            const result = await ollamaService.analyzeTimeframe(
+                `Analyze the sequence from ${startTime}s to ${endTime}s. Describe the visual content and actions in these frames.`,
+                'llava',
+                base64Frames
+            );
             setAiAnalysis(result);
         } catch (err) {
             setAiAnalysis("Failed to connect to Ollama.");
@@ -537,7 +543,7 @@ const EditorLayout: React.FC = () => {
                                         <div className="grid grid-cols-2 gap-4">
                                             <Card className="glass border-white/20 p-4">
                                                 <h4 className="text-sm font-semibold mb-2">Analysis Tool</h4>
-                                                <p className="text-xs text-muted-foreground">Uses Llama3 to analyze objects and movement in the selected sequence.</p>
+                                                <p className="text-xs text-muted-foreground">Uses LLaVA to visually analyze objects and movement in the extracted frames for the selected sequence.</p>
                                             </Card>
                                             <Card className="glass border-white/20 p-4">
                                                 <h4 className="text-sm font-semibold mb-2">Local Connection</h4>

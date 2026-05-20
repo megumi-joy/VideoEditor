@@ -8,18 +8,23 @@ export interface OllamaResponse {
 export class OllamaService {
     private baseUrl = 'http://localhost:11434/api';
 
-    async analyzeTimeframe(prompt: string, model: string = 'llama3'): Promise<string> {
+    async analyzeTimeframe(prompt: string, model: string = 'llava', images?: string[]): Promise<string> {
         try {
+            const bodyPayload: any = {
+                model,
+                prompt: `Analyze the following video content metadata/description for this timeframe: ${prompt}. Provide tactical insights.`,
+                stream: false,
+            };
+            if (images && images.length > 0) {
+                bodyPayload.images = images;
+            }
+
             const response = await fetch(`${this.baseUrl}/generate`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    model,
-                    prompt: `Analyze the following video content metadata/description for this timeframe: ${prompt}. Provide tactical insights.`,
-                    stream: false,
-                }),
+                body: JSON.stringify(bodyPayload),
             });
 
             if (!response.ok) {
