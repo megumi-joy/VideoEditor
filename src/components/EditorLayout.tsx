@@ -38,6 +38,7 @@ const EditorLayout: React.FC = () => {
     const [frames, setFrames] = useState<string[]>([]);
     const [isProcessing, setIsProcessing] = useState(false);
     const [aiAnalysis, setAiAnalysis] = useState<string>("");
+    const [ollamaEndpoint, setOllamaEndpoint] = useState<string>(localStorage.getItem('ollama_endpoint') || 'http://localhost:11434/api');
     const [isAiLoading, setIsAiLoading] = useState(false);
     const [magicPrompt, setMagicPrompt] = useState("");
     const [isGeneratingImage, setIsGeneratingImage] = useState(false);
@@ -63,6 +64,7 @@ const EditorLayout: React.FC = () => {
 
     useEffect(() => {
         localStorage.setItem('magic_editor_history', JSON.stringify(history));
+        localStorage.setItem('ollama_endpoint', ollamaEndpoint);
     }, [history]);
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -171,7 +173,8 @@ const EditorLayout: React.FC = () => {
             const result = await ollamaService.analyzeTimeframe(
                 `Analyze the sequence from ${startTime}s to ${endTime}s. Describe the visual content and actions in these frames.`,
                 'llava',
-                base64Frames
+                base64Frames,
+                ollamaEndpoint
             );
             setAiAnalysis(result);
         } catch (err) {
@@ -545,9 +548,18 @@ const EditorLayout: React.FC = () => {
                                                 <h4 className="text-sm font-semibold mb-2">Analysis Tool</h4>
                                                 <p className="text-xs text-muted-foreground">Uses LLaVA to visually analyze objects and movement in the extracted frames for the selected sequence.</p>
                                             </Card>
-                                            <Card className="glass border-white/20 p-4">
-                                                <h4 className="text-sm font-semibold mb-2">Local Connection</h4>
-                                                <p className="text-xs text-muted-foreground">Connected to http://localhost:11434</p>
+                                            <Card className="glass border-white/20 p-4 flex flex-col justify-between">
+                                                <div>
+                                                    <h4 className="text-sm font-semibold mb-2">Ollama Endpoint</h4>
+                                                    <p className="text-xs text-muted-foreground mb-2">Configure URL (Local or Colab ngrok)</p>
+                                                </div>
+                                                <input 
+                                                    type="text" 
+                                                    value={ollamaEndpoint}
+                                                    onChange={(e) => setOllamaEndpoint(e.target.value)}
+                                                    className="w-full text-xs p-2 rounded border bg-background text-primary focus:ring-1 focus:ring-primary outline-none"
+                                                    placeholder="http://localhost:11434/api"
+                                                />
                                             </Card>
                                         </div>
                                     </div>

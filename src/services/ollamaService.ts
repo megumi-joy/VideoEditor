@@ -6,9 +6,8 @@ export interface OllamaResponse {
 }
 
 export class OllamaService {
-    private baseUrl = 'http://localhost:11434/api';
-
-    async analyzeTimeframe(prompt: string, model: string = 'llava', images?: string[]): Promise<string> {
+    async analyzeTimeframe(prompt: string, model: string = 'llava', images?: string[], customBaseUrl?: string): Promise<string> {
+        const baseUrl = customBaseUrl || 'http://localhost:11434/api';
         try {
             const bodyPayload: any = {
                 model,
@@ -19,7 +18,7 @@ export class OllamaService {
                 bodyPayload.images = images;
             }
 
-            const response = await fetch(`${this.baseUrl}/generate`, {
+            const response = await fetch(`${baseUrl}/generate`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,13 +34,14 @@ export class OllamaService {
             return data.response;
         } catch (error) {
             console.error('Ollama analysis error:', error);
-            return "Error: Could not connect to Ollama. Make sure it's running locally on port 11434.";
+            return `Error: Could not connect to Ollama at ${baseUrl}. Make sure the URL is correct and allows CORS.`;
         }
     }
 
-    async checkStatus(): Promise<boolean> {
+    async checkStatus(customBaseUrl?: string): Promise<boolean> {
+        const baseUrl = customBaseUrl || 'http://localhost:11434/api';
         try {
-            const response = await fetch(`${this.baseUrl}/tags`);
+            const response = await fetch(`${baseUrl}/tags`);
             return response.ok;
         } catch {
             return false;
